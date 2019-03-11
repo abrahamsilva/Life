@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Life</string>
+    <string name="nav_tips">Tips</string>
+    <string name="nav_faqs">FAQs</string>
+    <string name="nav_surveys">Encuestas</string>
+    <string name="nav_opinion">Danos tu opinión</string>
+    <string name="nav_notifications">Notifications</string>
+    <string name="nav_settings">Settings</string>
+    <string name="nav_rate">Rate us</string>
 </resources>
