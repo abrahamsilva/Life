@@ -39,5 +39,6 @@
         app:headerLayout="@layout/nav_header"
         app:itemTextAppearance="@android:style/TextAppearance.DeviceDefault.Small"
         app:itemTextColor="@android:color/white"
-        app:menu="@menu/drawer_menu" />
+        app:menu="@menu/drawer_menu"
+        />
 </android.support.v4.widget.DrawerLayout>
