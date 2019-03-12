@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#0412c5</color>
-    <color name="colorPrimaryDark">#000957</color>
+    <color name="colorPrimary">#1d2591</color>
+    <color name="colorPrimaryDark">#172064</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="menuHeader">#243346</color>
+    <color name="menuBody">#1c2c3f</color>
+    <color name="listDivider">#a3afaeae</color>
+    <color name="switchOn">#55d681</color>
+    <color name="darkGray">#4d4c4c</color>
+    <color name="lightGray">#6e6d6d</color>
+    <color name="expListDivider">#58a7a7a7</color>
     <color name="colorEmergency">#f96f25</color>
+
 </resources>
