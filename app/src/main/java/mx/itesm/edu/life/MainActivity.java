@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
             }
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.frame_layout, selectedFragment);
+            setTitle(R.string.title_eventos);
             transaction.commit();
             return true;
         }
