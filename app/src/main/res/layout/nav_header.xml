@@ -22,6 +22,6 @@
         android:text="Departamento de Bienestar y Consejería"
         android:textAlignment="viewStart"
         android:textColor="@android:color/white"
-        android:textSize="14sp" />
+        android:textSize="12sp" />
 
 </LinearLayout>
