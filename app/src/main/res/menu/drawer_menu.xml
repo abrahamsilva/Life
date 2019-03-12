@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:id="@+id/section1" android:checkableBehavior="single">
+    <group android:id="@+id/section1" android:checkableBehavior="single" >
         <item android:id="@+id/nav_tips"
             android:title="@string/nav_tips"/>
         <item android:id="@+id/nav_faqs"
@@ -12,13 +13,16 @@
             android:title="@string/nav_surveys"/>
         <item android:id="@+id/nav_opinion"
             android:title="@string/nav_opinion"/>
-        <item android:id="@+id/nav_notifications"
-            android:title="@string/nav_notifications"/>
+        <item
+            android:id="@+id/nav_notifications"
+            android:title="@string/nav_notifications"
+            app:actionLayout="@layout/switch_item"
+            app:showAsAction="always"/>
     </group>
     <group android:id="@+id/section2" android:checkableBehavior="none">
         <item android:id="@+id/nav_settings"
             android:title="@string/nav_settings"/>
         <item android:id="@+id/nav_rate"
-            android:title="@string/nav_rate"/>
+            android:title="@string/nav_rate" />
     </group>
 </menu>
