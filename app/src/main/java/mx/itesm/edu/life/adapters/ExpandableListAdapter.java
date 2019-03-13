@@ -1,4 +1,4 @@
-package mx.itesm.edu.life;
+package mx.itesm.edu.life.adapters;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import java.util.HashMap;
 import java.util.List;
+
+import mx.itesm.edu.life.R;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
