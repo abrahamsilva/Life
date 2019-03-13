@@ -21,9 +21,6 @@ public class ContactRecycleAdapter
 
     private Context context;
     private List<Contact> contacts;
-    
-    
-    
 
     public ContactRecycleAdapter(Context context, List<Contact> contacts) {
         this.context = context;
