@@ -2,14 +2,15 @@ package mx.itesm.edu.life.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -17,13 +18,10 @@ import mx.itesm.edu.life.R;
 import mx.itesm.edu.life.models.Contact;
 
 public class ContactRecycleAdapter
-        extends RecyclerView.Adapter<ContactRecycleAdapter.ContactRecordHolder>{
+        extends RecyclerView.Adapter<ContactRecycleAdapter.ViewHolder>{
 
     private Context context;
     private List<Contact> contacts;
-    
-    
-    
 
     public ContactRecycleAdapter(Context context, List<Contact> contacts) {
         this.context = context;
@@ -32,32 +30,34 @@ public class ContactRecycleAdapter
 
     @NonNull
     @Override
-    public ContactRecordHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view;
         LayoutInflater inflater = LayoutInflater.from(context);
         view = inflater.inflate(
                 R.layout.contact_item,viewGroup,
                 false);
-        final ContactRecordHolder contactRecordHolder
-                = new ContactRecordHolder(view);
-        contactRecordHolder.itemView.setOnClickListener(new View.OnClickListener() {
+
+        ViewHolder holder = new ViewHolder(view, new ViewHolder.ClickListener() {
             @Override
-            public void onClick(View view) {
-                Contact contact = contacts.get(contactRecordHolder.getAdapterPosition());
-                Toast.makeText(context, contact.getName(), Toast.LENGTH_SHORT).show();
-//                Intent it  = new Intent(context, ContactActivity.class);
-//                it.putExtra("contact", contact);
-//                context.startActivity(it);
+            public void sendEmail(int position) {
+                Contact contact = contacts.get(position);
+                Intent intent = new Intent(Intent.ACTION_SENDTO);
+                intent.setData(Uri.parse("mailto:")); // only email apps should handle this
+                intent.putExtra(Intent.EXTRA_EMAIL, contact.getMail());
+                intent.putExtra(Intent.EXTRA_SUBJECT, "App Consejería y Bienestar");
+                if (intent.resolveActivity(context.getPackageManager()) != null) {
+                    context.startActivity(intent);
+                }
             }
         });
 
-        return contactRecordHolder;
+        return holder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ContactRecordHolder contactRecordHolder, int i) {
-        contactRecordHolder.name.setText(contacts.get(i).getName());
-        contactRecordHolder.id.setText(contacts.get(i).getId());
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+        viewHolder.name.setText(contacts.get(i).getName());
+        viewHolder.id.setText(contacts.get(i).getId());
     }
 
     @Override
@@ -65,15 +65,37 @@ public class ContactRecycleAdapter
         return contacts.size();
     }
 
-    public static class ContactRecordHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView id, name, artist;
+        ClickListener listener;
         ImageView image;
+        TextView name, id;
+        ImageButton emailButton;
 
-        public ContactRecordHolder(@NonNull View itemView) {
+        public ViewHolder(View itemView, ClickListener listener) {
             super(itemView);
-            id = itemView.findViewById(R.id.id_contact);
             name = itemView.findViewById(R.id.contact_name);
+            id = itemView.findViewById(R.id.id_contact);
+            emailButton = itemView.findViewById(R.id.mail);
+
+            this.listener = listener;
+            emailButton.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()) {
+                case R.id.mail:
+                    listener.sendEmail(this.getAdapterPosition());
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public interface ClickListener {
+            void sendEmail(int p);
         }
     }
+
 }

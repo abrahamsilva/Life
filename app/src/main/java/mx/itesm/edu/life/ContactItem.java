@@ -1,7 +1,11 @@
 package mx.itesm.edu.life;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 
 public class ContactItem extends AppCompatActivity {
 
@@ -10,4 +14,6 @@ public class ContactItem extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.contact_item);
     }
+
+
 }

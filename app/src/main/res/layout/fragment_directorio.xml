@@ -34,6 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@color/colorEmergency"
+                android:onClick="callEmergency"
                 android:src="@drawable/ic_phone_white_24dp" />
 
         </LinearLayout>
