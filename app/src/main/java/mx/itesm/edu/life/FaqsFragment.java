@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static java.sql.DriverManager.println;
+import mx.itesm.edu.life.adapters.ExpandableListAdapter;
 
 public class FaqsFragment extends Fragment {
 
