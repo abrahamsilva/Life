@@ -9,10 +9,11 @@ public class Contact implements Serializable {
     public Contact() {
     }
 
-    public Contact(String id, String name, String mail) {
+    public Contact(String id, String name, String mail, String desc) {
         this.id = id;
         this.name = name;
         this.mail = mail;
+        this.desc = desc;
     }
 
     public String getId() {

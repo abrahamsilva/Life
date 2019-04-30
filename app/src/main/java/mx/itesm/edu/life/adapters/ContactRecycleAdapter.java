@@ -57,7 +57,7 @@ public class ContactRecycleAdapter
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         viewHolder.name.setText(contacts.get(i).getName());
-        viewHolder.id.setText(contacts.get(i).getId());
+        viewHolder.desc.setText(contacts.get(i).getDesc());
     }
 
     @Override
@@ -69,13 +69,13 @@ public class ContactRecycleAdapter
 
         ClickListener listener;
         ImageView image;
-        TextView name, id;
+        TextView name, desc;
         ImageButton emailButton;
 
         public ViewHolder(View itemView, ClickListener listener) {
             super(itemView);
             name = itemView.findViewById(R.id.contact_name);
-            id = itemView.findViewById(R.id.id_contact);
+            desc = itemView.findViewById(R.id.id_contact);
             emailButton = itemView.findViewById(R.id.mail);
 
             this.listener = listener;

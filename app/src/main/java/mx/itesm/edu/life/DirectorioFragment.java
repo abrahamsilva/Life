@@ -36,9 +36,9 @@ public class DirectorioFragment extends Fragment {
         recyclerView = rootView.findViewById(R.id.recycleView);
 
         contacts = new ArrayList<>();
-        Contact c1 = new Contact("1","Yoali Sotomayor", "yoali@mail.com");
+        Contact c1 = new Contact("1","Yoali Sotomayor", "yoali@mail.com", "programador");
         contacts.add(c1);
-        Contact c2 = new Contact("2","Abraham Silva", "abraham@mail.com");
+        Contact c2 = new Contact("2","Abraham Silva", "abraham@mail.com", "programador");
         contacts.add(c2);
         setRecyclerView(contacts);
 
