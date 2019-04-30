@@ -26,7 +26,7 @@ public class TipsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_tips,container,false);
-
+        getActivity().setTitle(R.string.nav_tips);
         gridView = (GridView)rootView.findViewById(R.id.gridView);
         initData();
         gridViewAdapter = new GridViewAdapter(getActivity(),tips);

@@ -19,10 +19,4 @@
             app:actionLayout="@layout/switch_item"
             app:showAsAction="always"/>
     </group>
-    <group android:id="@+id/section2" android:checkableBehavior="none">
-        <item android:id="@+id/nav_settings"
-            android:title="@string/nav_settings"/>
-        <item android:id="@+id/nav_rate"
-            android:title="@string/nav_rate" />
-    </group>
 </menu>

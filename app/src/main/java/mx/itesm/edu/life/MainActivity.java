@@ -96,14 +96,24 @@ public class MainActivity extends AppCompatActivity
 
         switch (menuItem.getItemId()){
             case R.id.nav_tips:
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new TipsFragment()).commit();
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_container,new TipsFragment())
+                            .commit();
                 break;
             case R.id.nav_faqs:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FaqsFragment()).commit();
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container,new FaqsFragment())
+                        .commit();
                 break;
             case R.id.nav_surveys:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new SurveysFragment()).commit();
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container,new SurveysFragment())
+                        .commit();
                 break;
+            case R.id.nav_opinion:
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("https://docs.google.com/forms/d/e/1FAIpQLSe1vugFyANAqogeoS5BBT2tu6btPSqxoHChx1KhdRA_am7B5g/viewform"));
+                startActivity(browserIntent);
         }
 
         drawer.closeDrawer(GravityCompat.START);

@@ -27,7 +27,7 @@ public class FaqsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_faqs,container,false);
-
+        getActivity().setTitle(R.string.nav_faqs);
         expandableListView = (ExpandableListView)rootView.findViewById(R.id.expListView);
         initData();
         expandableListAdapter = new ExpandableListAdapter(getActivity(),listDataHeader,listHashMap);
