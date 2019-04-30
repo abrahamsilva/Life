@@ -46,6 +46,7 @@ public class DirectorioFragment extends Fragment {
     }
 
     private void setRecyclerView(List<Contact> contacts){
+        this.contacts = contacts;
         Log.d("DIRECTORIO", contacts.get(0).toString());
         ContactRecycleAdapter contactRecycleAdapter = new ContactRecycleAdapter(this.getContext(), contacts);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));

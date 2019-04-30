@@ -18,7 +18,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/communication/ic_mail_outline_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/image/ic_brightness_1_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -28,9 +28,12 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="color" value="8b8b8b" />
-                            <entry key="outputName" value="ic_mail_outline_gray_24dp" />
+                            <entry key="color" value="3315aa" />
+                            <entry key="height" value="12" />
+                            <entry key="outputName" value="event_1_blue_24dp" />
+                            <entry key="overrideSize" value="true" />
                             <entry key="sourceFile" value="C:\Users\yoa_a" />
+                            <entry key="width" value="12" />
                           </map>
                         </option>
                       </PersistentState>

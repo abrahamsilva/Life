@@ -4,12 +4,14 @@
     <string name="nav_faqs">FAQs</string>
     <string name="nav_surveys">Encuestas</string>
     <string name="nav_opinion">Danos tu opinión</string>
-    <string name="nav_notifications">Notifications</string>
-    <string name="nav_settings">Settings</string>
+    <string name="nav_notifications">Notificaciones</string>
+    <string name="nav_settings">Ajustes</string>
     <string name="nav_rate">Rate us</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open">Abrir cajón de navegación</string>
+    <string name="navigation_drawer_close">Cerrar cajón de navegación</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_eventos">Eventos</string>
     <string name="title_directorio">Directorio</string>
+    <string name="ok">OK</string>
+    <string name="event_details">Fecha: %1$s \nDescripción: %2$s </string>
 </resources>
