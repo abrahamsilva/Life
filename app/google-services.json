@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "636658520532",
+    "firebase_url": "https://life-ad3ba.firebaseio.com",
+    "project_id": "life-ad3ba",
+    "storage_bucket": "life-ad3ba.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:636658520532:android:f9c62d233338e1e3",
+        "android_client_info": {
+          "package_name": "mx.itesm.edu.life"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "636658520532-iu7451m9ibem8ndl54dr73iud8k9j90n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "mx.itesm.edu.life",
+            "certificate_hash": "309cf1a8d9c3e586066647651bade955cb3b3c03"
+          }
+        },
+        {
+          "client_id": "636658520532-ofhgfr2kd11s5tu119rj5tec5p33b3ge.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDV-bJM_sQwi5QKDd2whTzPEu1oZl6qfIQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "636658520532-ofhgfr2kd11s5tu119rj5tec5p33b3ge.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
