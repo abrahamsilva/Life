@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Contact implements Serializable {
 
-    private String id, name, phone, mail, desc;
+    private String id, name, mail, desc;
 
     public Contact() {
     }
@@ -30,14 +30,6 @@ public class Contact implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
     }
 
     public String getMail() {
