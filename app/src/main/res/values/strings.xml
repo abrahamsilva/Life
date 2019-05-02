@@ -14,4 +14,7 @@
     <string name="title_directorio">Directorio</string>
     <string name="ok">OK</string>
     <string name="event_details">Fecha: %1$s \nDescripción: %2$s </string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

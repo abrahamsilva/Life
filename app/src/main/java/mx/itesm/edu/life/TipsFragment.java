@@ -39,10 +39,10 @@ public class TipsFragment extends Fragment {
 
         tips = new ArrayList<>();
 
-        Tip tip1 = new Tip("Ghosting",R.drawable.logo);
-        Tip tip2 = new Tip("Alcohol",R.drawable.logo);
-        Tip tip3 = new Tip("Micromachismos",R.drawable.logo);
-        Tip tip4 = new Tip("Depresión",R.drawable.logo);
+        Tip tip1 = new Tip("Ghosting",R.drawable.logo, "Boo");
+        Tip tip2 = new Tip("Alcohol",R.drawable.logo, "dile no a las chelas");
+        Tip tip3 = new Tip("Micromachismos",R.drawable.logo, "girl power");
+        Tip tip4 = new Tip("Depresión",R.drawable.logo, ":(");
 
         tips.add(tip1);
         tips.add(tip2);
