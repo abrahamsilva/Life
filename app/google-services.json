@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "636658520532-cngo5q1olnughns2em8vq7m4aebsgmf5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "mx.itesm.edu.life",
+            "certificate_hash": "35bc139692253569b3a191853a56d35e63adf93f"
+          }
+        },
+        {
           "client_id": "636658520532-ofhgfr2kd11s5tu119rj5tec5p33b3ge.apps.googleusercontent.com",
           "client_type": 3
         }

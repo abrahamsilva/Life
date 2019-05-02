@@ -7,17 +7,18 @@ public class Tip {
     private String title;
     private String icon;
     private String id;
+    private String desc;
 
-    public Tip(){
+    public Tip(){    }
 
-    }
-
-    public Tip(String title, String icon, String id) {
+    public Tip(String title, String icon, String id, String desc) {
 
         this.title = title;
         this.icon = icon;
         this.id=id;
+        this.desc = desc;
     }
+
     public String getId() {
         return id;
     }
@@ -40,5 +41,13 @@ public class Tip {
 
     public void setIcon(String icon) {
         this.icon = icon;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 }

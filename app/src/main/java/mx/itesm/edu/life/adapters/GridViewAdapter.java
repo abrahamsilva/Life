@@ -47,10 +47,9 @@ public class GridViewAdapter extends BaseAdapter {
 
         String title = (String)tips.get(position).getTitle();
         Uri icon = Uri.parse(tips.get(position).getIcon());
-
+        String desc = tips.get(position).getDesc();
 
         if(convertView==null){
-
             LayoutInflater inflater =(LayoutInflater)this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.list_tip,null);
             ImageView imageView =(ImageView)convertView.findViewById(R.id.iconTip);

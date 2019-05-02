@@ -3,10 +3,13 @@ package mx.itesm.edu.life;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -59,6 +62,18 @@ public class TipsFragment extends Fragment {
                 }
                 gridViewAdapter = new GridViewAdapter(getActivity(),tips);
                 gridView.setAdapter(gridViewAdapter);
+                gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Tip tip = (Tip)parent.getItemAtPosition(position);
+                        Bundle args = new Bundle();
+                        args.putString("title", tip.getTitle());
+                        args.putString("desc", tip.getDesc());
+                        DialogFragment dialog = new TipDetailsDialog();
+                        dialog.setArguments(args);
+                        dialog.show(getFragmentManager(), "event details");
+                    }
+                });
             }
 
             @Override
