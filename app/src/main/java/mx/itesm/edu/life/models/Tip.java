@@ -1,7 +1,5 @@
 package mx.itesm.edu.life.models;
 
-import android.net.Uri;
-
 public class Tip {
 
     private String title;
@@ -15,7 +13,7 @@ public class Tip {
 
         this.title = title;
         this.icon = icon;
-        this.id=id;
+        this.id = id;
         this.desc = desc;
     }
 

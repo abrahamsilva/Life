@@ -14,7 +14,8 @@ public class EventDetailDialog extends DialogFragment {
         String mDate = mArgs.getString("date");
         String mTitle = mArgs.getString("title");
         String mDesc = mArgs.getString("desc");
-        String mMessage = getString(R.string.event_details, mDate, mDesc);
+        String mTime = mArgs.getString("time");
+        String mMessage = getString(R.string.event_details, mDate, mTime, mDesc);
         builder.setMessage(mMessage)
                 .setTitle(mTitle)
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
