@@ -9,10 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import mx.itesm.edu.life.adapters.GridViewAdapter;
+import mx.itesm.edu.life.models.Contact;
 import mx.itesm.edu.life.models.Tip;
 
 public class TipsFragment extends Fragment {
@@ -20,6 +27,8 @@ public class TipsFragment extends Fragment {
     private GridView gridView;
     private GridViewAdapter gridViewAdapter;
     private List<Tip> tips;
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference myRef;
 
     @Nullable
     @Override
@@ -27,10 +36,11 @@ public class TipsFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_tips,container,false);
         getActivity().setTitle(R.string.nav_tips);
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        myRef = mFirebaseDatabase.getReference("tips");
         gridView = (GridView)rootView.findViewById(R.id.gridView);
         initData();
-        gridViewAdapter = new GridViewAdapter(getActivity(),tips);
-        gridView.setAdapter(gridViewAdapter);
+
 
         return rootView;
     }
@@ -39,17 +49,23 @@ public class TipsFragment extends Fragment {
 
         tips = new ArrayList<>();
 
-        Tip tip1 = new Tip("Ghosting",R.drawable.logo);
-        Tip tip2 = new Tip("Alcohol",R.drawable.logo);
-        Tip tip3 = new Tip("Micromachismos",R.drawable.logo);
-        Tip tip4 = new Tip("Depresión",R.drawable.logo);
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-        tips.add(tip1);
-        tips.add(tip2);
-        tips.add(tip3);
-        tips.add(tip4);
+                for(DataSnapshot tipSnapshot : dataSnapshot.getChildren()){
+                    Tip tip = tipSnapshot.getValue(Tip.class);
+                    tips.add(tip);
+                }
+                gridViewAdapter = new GridViewAdapter(getActivity(),tips);
+                gridView.setAdapter(gridViewAdapter);
+            }
 
-
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
 
     }
 }

@@ -1,6 +1,7 @@
 package mx.itesm.edu.life.adapters;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
+import java.net.URI;
 import java.util.List;
 
 import mx.itesm.edu.life.R;
@@ -42,7 +46,8 @@ public class GridViewAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         String title = (String)tips.get(position).getTitle();
-        int icon = (int)tips.get(position).getIcon();
+        Uri icon = Uri.parse(tips.get(position).getIcon());
+
 
         if(convertView==null){
 
@@ -51,7 +56,8 @@ public class GridViewAdapter extends BaseAdapter {
             ImageView imageView =(ImageView)convertView.findViewById(R.id.iconTip);
             TextView textView = (TextView)convertView.findViewById(R.id.titleTip);
 
-            imageView.setImageResource(icon);
+            Picasso.get().load(tips.get(position).getIcon()).into(imageView);
+
             textView.setText(title);
         }
         return convertView;

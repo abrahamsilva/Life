@@ -73,19 +73,6 @@ public class FaqsFragment extends Fragment {
                 System.out.println("The read failed: " + databaseError.getCode());
             }
         });
-/*
-        listDataHeader.add("Pregunta 1");
-        listDataHeader.add("Pregunta 2");
-        listDataHeader.add("Pregunta 3");
-        listDataHeader.add("Pregunta 4");
-        listDataHeader.add("Pregunta 5");
 
-        for(int i=0;i<listDataHeader.size();i++){
-            listHashMap.put(listDataHeader.get(i),new ArrayList<String>());
-            listHashMap.get(listDataHeader.get(i)).add("Lorem ipsum dolor sit amet, purus pharetra tristique quis " +
-                    "dolor sit tellus, scelerisque bibendum platea, a sed. Aliquet ornare phasellus, suspendisse odio, " +
-                    "aenean sem felis eros erat, ut etiam, ac maecenas facilisis.");
-        }
-*/
     }
 }
