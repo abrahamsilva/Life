@@ -1,12 +1,8 @@
 package mx.itesm.edu.life;
 
-import android.content.Intent;
-import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatDialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,8 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -58,7 +52,6 @@ public class DirectorioFragment extends Fragment {
 
               for(DataSnapshot contactSnapshot : dataSnapshot.getChildren()){
                   Contact contact = contactSnapshot.getValue(Contact.class);
-
                   contacts.add(contact);
                 }
                 setRecyclerView(contacts);
@@ -76,7 +69,8 @@ public class DirectorioFragment extends Fragment {
     private void setRecyclerView(List<Contact> contacts){
         this.contacts = contacts;
         Log.d("DIRECTORIO", contacts.get(0).toString());
-        ContactRecycleAdapter contactRecycleAdapter = new ContactRecycleAdapter(this.getContext(), contacts);
+        ContactRecycleAdapter contactRecycleAdapter =
+                new ContactRecycleAdapter(this.getContext(), contacts);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         recyclerView.setAdapter(contactRecycleAdapter);
     }

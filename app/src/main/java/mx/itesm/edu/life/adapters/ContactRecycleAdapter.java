@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +44,7 @@ public class ContactRecycleAdapter
                 Contact contact = contacts.get(position);
                 Intent intent = new Intent(Intent.ACTION_SENDTO);
                 intent.setData(Uri.parse("mailto:")); // only email apps should handle this
-                intent.putExtra(Intent.EXTRA_EMAIL, contact.getMail());
+                intent.putExtra(Intent.EXTRA_EMAIL, new String[] {contact.getMail()});
                 intent.putExtra(Intent.EXTRA_SUBJECT, "App Consejería y Bienestar");
                 if (intent.resolveActivity(context.getPackageManager()) != null) {
                     context.startActivity(intent);

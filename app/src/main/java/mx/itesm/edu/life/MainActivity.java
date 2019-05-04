@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity
 
     public void callEmergency(View view){
         Intent intent = new Intent(Intent.ACTION_DIAL);
-        intent.setData(Uri.parse("tel:" + "5541385023"));
+        intent.setData(Uri.parse("tel:" + "5554831581"));
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivity(intent);
         }
