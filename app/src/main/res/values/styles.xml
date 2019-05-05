@@ -16,6 +16,7 @@
     <style name="switchOn">
         <item name="android:colorControlActivated">@color/switchOn</item>
     </style>
+    <!-- Dialog -->
     <style name="MyAnimation.Window" parent="@android:style/Animation.Activity">
         <item name="android:windowEnterAnimation">@anim/anim_in</item>
         <item name="android:windowExitAnimation">@anim/anim_out</item>
@@ -25,6 +26,19 @@
         <item name="colorAccent">@color/colorPrimary</item>
         <!--title and message color-->
         <item name="android:textColorPrimary">@color/darkGray</item>
+    </style>
+    <!-- Fullscreen Dialog -->
+    <style name="AppTheme.FullScreenDialog" parent="Theme.MaterialComponents.Light.Dialog">
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="actionMenuTextColor">@color/colorAccent</item>
+    </style>
+    <style name="AppTheme.Slide">
+        <item name="android:windowEnterAnimation">@anim/slide_up</item>
+        <item name="android:windowExitAnimation">@anim/slide_down</item>
     </style>
 
 </resources>

@@ -6,14 +6,17 @@
     <string name="nav_opinion">Danos tu opinión</string>
     <string name="nav_notifications">Notificaciones</string>
     <string name="nav_settings">Ajustes</string>
-    <string name="nav_rate">Rate us</string>
     <string name="navigation_drawer_open">Abrir cajón de navegación</string>
     <string name="navigation_drawer_close">Cerrar cajón de navegación</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_eventos">Eventos</string>
     <string name="title_directorio">Directorio</string>
     <string name="ok">OK</string>
-    <string name="event_details">Fecha: %1$s \nHora: %2$s \nDescripción: %3$s </string>
+    <string name="event_description">Descripción: %1$s </string>
+    <string name="event_date">Fecha: %1$s </string>
+    <string name="event_time">Hora: %1$s </string>
+    <string name="event_list_title">Eventos en %1$s </string>
+    <string name="event_dialog">Fecha: %1$s \nHora: %2$s \nDescripción: %3$s</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

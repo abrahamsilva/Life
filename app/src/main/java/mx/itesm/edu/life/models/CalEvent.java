@@ -1,6 +1,9 @@
 package mx.itesm.edu.life.models;
 
-public class CalEvent {
+import java.io.Serializable;
+import java.util.Calendar;
+
+public class CalEvent implements Serializable {
     private String desc;
     private String title;
     private int day;
@@ -17,6 +20,12 @@ public class CalEvent {
         this.month = month;
         this.year = year;
         this.time = time;
+    }
+
+    public Calendar getDate() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month - 1, day);
+        return calendar;
     }
 
     public String getDesc() {

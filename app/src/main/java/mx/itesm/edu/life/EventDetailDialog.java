@@ -5,23 +5,43 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.view.View;
+import android.widget.TextView;
 
 public class EventDetailDialog extends DialogFragment {
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        View titleView = getActivity().getLayoutInflater().inflate(R.layout.dialog_title, null);
+        TextView tv = titleView.findViewById(R.id.titleBar);
+
+        AlertDialog.Builder builder =
+                new AlertDialog.Builder( getActivity(), R.style.DialogTheme );
         Bundle mArgs = getArguments();
-        String mDate = mArgs.getString("date");
         String mTitle = mArgs.getString("title");
+        tv.setText(mTitle);
         String mDesc = mArgs.getString("desc");
+        String mDate = mArgs.getString("date");
         String mTime = mArgs.getString("time");
-        String mMessage = getString(R.string.event_details, mDate, mTime, mDesc);
-        builder.setMessage(mMessage)
-                .setTitle(mTitle)
+        builder.setMessage(getString(R.string.event_dialog, mDate, mTime, mDesc))
+                .setCustomTitle(titleView)
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                     }
                 });
         return builder.create();
+    }
+
+    @Override
+    public void onStart() {
+        if (getDialog() == null)
+        {
+            return;
+        }
+
+        getDialog().getWindow().setWindowAnimations(
+                R.style.MyAnimation_Window);
+
+        super.onStart();
     }
 }

@@ -18,10 +18,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import mx.itesm.edu.life.models.CalEvent;
 
@@ -32,6 +35,7 @@ public class EventosFragment extends Fragment {
     private CalendarView calendarView;
     private List<EventDay> events;
     private List<CalEvent> eventsDesc;
+    private Map<String, List<CalEvent>> eventsPerDay;
 
     public static EventosFragment newInstance(){
         EventosFragment fragment = new EventosFragment();
@@ -45,7 +49,7 @@ public class EventosFragment extends Fragment {
         calendarView = rootView.findViewById(R.id.calendarView);
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRef = mFirebaseDatabase.getReference("events");
-
+        eventsPerDay = new HashMap<>();
         events = new ArrayList<>();
         eventsDesc = new ArrayList<>();
 
@@ -66,6 +70,7 @@ public class EventosFragment extends Fragment {
                 }
 
                 fillEvents();
+                fillEventsPerDay();
                 calendarView.setEvents(events);
 
                 calendarView.setOnDayClickListener(eventDay -> {
@@ -74,17 +79,27 @@ public class EventosFragment extends Fragment {
                     days.add(clickedDayCalendar);
                     calendarView.setSelectedDates(days);
                     if(events.contains(eventDay)){
-                        CalEvent event = eventsDesc.get(events.indexOf(eventDay));
-                        Bundle args = new Bundle();
                         String date = DateUtils.formatDateTime(getContext(),
-                                eventDay.getCalendar().getTimeInMillis(), DateUtils.FORMAT_SHOW_DATE);
-                        args.putString("date", date);
-                        args.putString("time", event.getTime());
-                        args.putString("title", event.getTitle());
-                        args.putString("desc", event.getDesc());
-                        DialogFragment dialog = new EventDetailDialog();
-                        dialog.setArguments(args);
-                        dialog.show(getFragmentManager(), "event details");
+                                eventDay.getCalendar().getTimeInMillis(),
+                                DateUtils.FORMAT_SHOW_DATE);
+                        if(eventsPerDay.get(date).size()>1){
+                            Bundle args = new Bundle();
+                            args.putString("date", date);
+                            args.putSerializable("events", (Serializable) eventsPerDay.get(date));
+                            DialogFragment dialog = new EventListDialog();
+                            dialog.setArguments(args);
+                            dialog.show(getFragmentManager(), "event list details");
+                        } else {
+                            CalEvent event = eventsDesc.get(events.indexOf(eventDay));
+                            Bundle args = new Bundle();
+                            args.putString("date", date);
+                            args.putString("time", event.getTime());
+                            args.putString("title", event.getTitle());
+                            args.putString("desc", event.getDesc());
+                            DialogFragment dialog = new EventDetailDialog();
+                            dialog.setArguments(args);
+                            dialog.show(getFragmentManager(), "event details");
+                        }
                     }
                 });
             }
@@ -99,10 +114,23 @@ public class EventosFragment extends Fragment {
 
     public void fillEvents(){
         for(CalEvent calEvent : eventsDesc){
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(calEvent.getYear(),calEvent.getMonth()-1,calEvent.getDay());
+            Calendar calendar = calEvent.getDate();
             events.add(new EventDay(calendar, R.drawable.blue_circle));
-            Log.d("EVENT", calEvent.getTitle() +  calEvent.getDay() +"/"+ calEvent.getMonth());
+        }
+    }
+
+    public void fillEventsPerDay(){
+        for(CalEvent calEvent : eventsDesc){
+            String date = DateUtils.formatDateTime(getContext(),
+                    calEvent.getDate().getTimeInMillis(), DateUtils.FORMAT_SHOW_DATE);
+            List<CalEvent> events;
+            if(eventsPerDay.containsKey(date)){
+                events = eventsPerDay.get(date);
+            } else{
+                events = new ArrayList<>();
+                eventsPerDay.put(date, events);
+            }
+            events.add(calEvent);
         }
     }
 }
