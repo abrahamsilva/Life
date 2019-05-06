@@ -1,5 +1,8 @@
 package mx.itesm.edu.life;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -28,6 +31,8 @@ import java.util.Map;
 
 import mx.itesm.edu.life.models.CalEvent;
 
+import static android.content.Context.ALARM_SERVICE;
+
 public class EventosFragment extends Fragment {
 
     private FirebaseDatabase mFirebaseDatabase;
@@ -36,6 +41,9 @@ public class EventosFragment extends Fragment {
     private List<EventDay> events;
     private List<CalEvent> eventsDesc;
     private Map<String, List<CalEvent>> eventsPerDay;
+    private AlarmManager alarmManager;
+    private Calendar calendar;
+    private PendingIntent broadcast;
 
     public static EventosFragment newInstance(){
         EventosFragment fragment = new EventosFragment();
@@ -46,6 +54,7 @@ public class EventosFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_eventos, container, false);
         getActivity().setTitle(R.string.title_eventos);
+        alarmManager = (AlarmManager)getActivity().getSystemService(ALARM_SERVICE);
         calendarView = rootView.findViewById(R.id.calendarView);
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRef = mFirebaseDatabase.getReference("events");
@@ -60,18 +69,31 @@ public class EventosFragment extends Fragment {
 
     public void initData() {
 
+        Intent intent = new Intent();
+
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+
+
                 for(DataSnapshot eventSnapshot : dataSnapshot.getChildren()){
                     CalEvent event = eventSnapshot.getValue(CalEvent.class);
                     eventsDesc.add(event);
+
                 }
 
                 fillEvents();
                 fillEventsPerDay();
                 calendarView.setEvents(events);
+                intent.setAction("mx.itesm.edu.life.action.DISPLAY_NOTIFICATION");
+                intent.putExtra("event",eventsDesc.get(0));
+                calendar = Calendar.getInstance();
+                calendar.add(Calendar.SECOND,10);
+
+
+                broadcast =PendingIntent.getBroadcast(getContext(),100,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),broadcast);
 
                 calendarView.setOnDayClickListener(eventDay -> {
                     Calendar clickedDayCalendar = eventDay.getCalendar();
