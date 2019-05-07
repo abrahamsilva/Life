@@ -25,12 +25,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
         </activity>
-
-        <receiver android:name=".AlarmReceiver">
+        <service
+            android:name=".MyFirebaseMessagingService">
             <intent-filter>
-                <action android:name="mx.itesm.edu.life.action.DISPLAY_NOTIFICATION"></action>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
-        </receiver>
+        </service>
     </application>
 
 </manifest>

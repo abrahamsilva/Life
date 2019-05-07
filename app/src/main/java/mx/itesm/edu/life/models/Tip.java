@@ -1,6 +1,8 @@
 package mx.itesm.edu.life.models;
 
-public class Tip {
+import java.io.Serializable;
+
+public class Tip implements Serializable {
 
     private String title;
     private String icon;
