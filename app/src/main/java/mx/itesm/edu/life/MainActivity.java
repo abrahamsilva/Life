@@ -19,6 +19,7 @@ import android.view.View;
 
 import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.EventDay;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -32,6 +33,9 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        FirebaseMessaging.getInstance().subscribeToTopic("pushNotification");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
