@@ -19,12 +19,12 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import mx.itesm.edu.life.adapters.ContactRecycleAdapter;
-import mx.itesm.edu.life.models.Contact;
+import mx.itesm.edu.life.adapters.SurveyRecycleAdapter;
+import mx.itesm.edu.life.models.Survey;
 
 public class SurveysFragment extends Fragment {
 
-    private List<Contact> surveys;
+    private List<Survey> surveys;
     private RecyclerView recyclerView;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference myRef;
@@ -37,8 +37,8 @@ public class SurveysFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_directorio, container, false);
-        getActivity().setTitle(R.string.title_directorio);
+        View rootView = inflater.inflate(R.layout.fragment_surveys, container, false);
+        getActivity().setTitle(R.string.nav_surveys);
         recyclerView = rootView.findViewById(R.id.recycleView);
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -49,10 +49,9 @@ public class SurveysFragment extends Fragment {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                for(DataSnapshot contactSnapshot : dataSnapshot.getChildren()){
-                    Contact contact = contactSnapshot.getValue(Contact.class);
-                    surveys.add(contact);
+                for(DataSnapshot surveySnapshot : dataSnapshot.getChildren()){
+                    Survey survey = surveySnapshot.getValue(Survey.class);
+                    surveys.add(survey);
                 }
                 setRecyclerView(surveys);
             }
@@ -62,16 +61,15 @@ public class SurveysFragment extends Fragment {
                 System.out.println("The read failed: " + databaseError.getCode());
             }
         });
-
         return rootView;
     }
 
-    private void setRecyclerView(List<Contact> contacts){
-        this.surveys = contacts;
-        Log.d("DIRECTORIO", contacts.get(0).toString());
-        ContactRecycleAdapter contactRecycleAdapter =
-                new ContactRecycleAdapter(this.getContext(), contacts);
+    private void setRecyclerView(List<Survey> surveys){
+        this.surveys = surveys;
+        Log.d("SURVEYS", surveys.get(0).toString());
+        SurveyRecycleAdapter surveyRecycleAdapter =
+                new SurveyRecycleAdapter(this.getContext(), surveys);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        recyclerView.setAdapter(contactRecycleAdapter);
+        recyclerView.setAdapter(surveyRecycleAdapter);
     }
 }
