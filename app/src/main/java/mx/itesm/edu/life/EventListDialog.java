@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +15,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import mx.itesm.edu.life.adapters.ContactRecycleAdapter;
 import mx.itesm.edu.life.adapters.EventRecycleAdapter;
 import mx.itesm.edu.life.models.CalEvent;
-import mx.itesm.edu.life.models.Contact;
 
 public class EventListDialog extends DialogFragment {
 

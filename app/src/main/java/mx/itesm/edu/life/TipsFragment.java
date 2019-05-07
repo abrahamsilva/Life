@@ -43,15 +43,11 @@ public class TipsFragment extends Fragment {
         myRef = mFirebaseDatabase.getReference("tips");
         gridView = (GridView)rootView.findViewById(R.id.gridView);
         initData();
-
-
         return rootView;
     }
 
     public void initData() {
-
         tips = new ArrayList<>();
-
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
