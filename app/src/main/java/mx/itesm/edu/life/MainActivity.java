@@ -14,8 +14,14 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.RelativeLayout;
+import android.widget.Switch;
+import android.widget.Toast;
 
 import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.EventDay;
@@ -30,11 +36,10 @@ public class MainActivity extends AppCompatActivity
 
     private DrawerLayout drawer;
     private NavigationView navigationView;
+    private Switch mSwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        FirebaseMessaging.getInstance().subscribeToTopic("pushNotification");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -45,6 +50,26 @@ public class MainActivity extends AppCompatActivity
         drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        Menu menuNav = navigationView.getMenu();
+
+        MenuItem item  =  menuNav.findItem(R.id.nav_notifications);
+        RelativeLayout layout = (RelativeLayout) item.getActionView();
+        mSwitch = layout.findViewById(R.id.notif_switch);
+
+
+        if(mSwitch != null){
+            mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        FirebaseMessaging.getInstance().subscribeToTopic("pushNotification");
+                    } else {
+                        Log.d("Suscripcion", "false");
+                        FirebaseMessaging.getInstance().unsubscribeFromTopic("pushNotification");
+                    }
+                }
+            });
+        }
 
         ActionBarDrawerToggle toogle = new ActionBarDrawerToggle(this,
                 drawer,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);

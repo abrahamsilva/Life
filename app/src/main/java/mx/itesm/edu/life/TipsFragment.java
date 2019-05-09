@@ -58,11 +58,10 @@ public class TipsFragment extends Fragment {
 
     public void initData() {
         Intent intent = new Intent();
-        tips = new ArrayList<>();
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
+                tips = new ArrayList<>();
                 for(DataSnapshot tipSnapshot : dataSnapshot.getChildren()){
                     Tip tip = tipSnapshot.getValue(Tip.class);
                     tips.add(tip);
