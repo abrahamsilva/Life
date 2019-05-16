@@ -9,7 +9,7 @@
     <ImageView
         android:id="@+id/image_event"
         android:layout_width="wrap_content"
-        android:layout_height="69dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="4dp"
@@ -18,8 +18,7 @@
         app:layout_constraintBottom_toTopOf="@id/calendarView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/aniversario" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.applandeo.materialcalendarview.CalendarView
         android:id="@+id/calendarView"

@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -32,6 +33,7 @@ public class FaqsFragment extends Fragment {
     private HashMap<String,List<String>>listHashMap;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference myRef;
+    private TextView emptyView;
 
     @Nullable
     @Override
@@ -43,6 +45,7 @@ public class FaqsFragment extends Fragment {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRef = mFirebaseDatabase.getReference("faqs");
 
+        emptyView = rootView.findViewById(R.id.empty);
         expandableListView = (ExpandableListView)rootView.findViewById(R.id.expListView);
         initData();
         return rootView;
@@ -64,8 +67,18 @@ public class FaqsFragment extends Fragment {
                     listHashMap.put(listDataHeader.get(Integer.parseInt(faq.getId())),new ArrayList<String>());
                     listHashMap.get(listDataHeader.get(Integer.parseInt(faq.getId()))).add(faq.getAnswer());
                 }
+
+                if(listDataHeader.size()<=0){
+                    expandableListView.setVisibility(View.GONE);
+                    emptyView.setVisibility(View.VISIBLE);
+                } else {
+                    emptyView.setVisibility(View.GONE);
+                    expandableListView.setVisibility(View.VISIBLE);
+                }
+
                 expandableListAdapter = new ExpandableListAdapter(getActivity(),listDataHeader,listHashMap);
                 expandableListView.setAdapter(expandableListAdapter);
+
             }
 
             @Override

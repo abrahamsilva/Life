@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -40,7 +41,7 @@ public class TipsFragment extends Fragment {
     private List<Tip> tips;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference myRef;
-
+    private TextView emptyView;
 
     @Nullable
     @Override
@@ -52,6 +53,7 @@ public class TipsFragment extends Fragment {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRef = mFirebaseDatabase.getReference("tips");
         gridView = (GridView)rootView.findViewById(R.id.gridView);
+        emptyView = rootView.findViewById(R.id.empty);
         initData();
         return rootView;
     }
@@ -66,9 +68,15 @@ public class TipsFragment extends Fragment {
                     Tip tip = tipSnapshot.getValue(Tip.class);
                     tips.add(tip);
                 }
-
                 gridViewAdapter = new GridViewAdapter(getActivity(),tips);
                 gridView.setAdapter(gridViewAdapter);
+                if(tips.size()<=0){
+                    gridView.setVisibility(View.GONE);
+                    emptyView.setVisibility(View.VISIBLE);
+                } else {
+                    emptyView.setVisibility(View.GONE);
+                    gridView.setVisibility(View.VISIBLE);
+                }
 
 
                 gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

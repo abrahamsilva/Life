@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,6 +30,7 @@ public class DirectorioFragment extends Fragment {
     private RecyclerView recyclerView;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference myRef;
+    private TextView emptyView;
 
     private Bundle mBundleRecyclerViewState;
 
@@ -44,6 +46,7 @@ public class DirectorioFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_directorio, container, false);
         getActivity().setTitle(R.string.title_directorio);
         recyclerView = rootView.findViewById(R.id.recycleView);
+        emptyView = rootView.findViewById(R.id.empty);
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRef = mFirebaseDatabase.getReference("contacts");
@@ -57,6 +60,13 @@ public class DirectorioFragment extends Fragment {
               for(DataSnapshot contactSnapshot : dataSnapshot.getChildren()){
                   Contact contact = contactSnapshot.getValue(Contact.class);
                   contacts.add(contact);
+                }
+                if(contacts.size()<=0){
+                    recyclerView.setVisibility(View.GONE);
+                    emptyView.setVisibility(View.VISIBLE);
+                } else {
+                    emptyView.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
                 }
                 setRecyclerView(contacts);
             }
@@ -72,7 +82,6 @@ public class DirectorioFragment extends Fragment {
 
     private void setRecyclerView(List<Contact> contacts){
         this.contacts = contacts;
-        Log.d("DIRECTORIO", contacts.get(0).toString());
         ContactRecycleAdapter contactRecycleAdapter =
                 new ContactRecycleAdapter(this.getContext(), contacts);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));

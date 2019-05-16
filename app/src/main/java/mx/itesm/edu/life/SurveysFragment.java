@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,6 +27,7 @@ public class SurveysFragment extends Fragment {
 
     private List<Survey> surveys;
     private RecyclerView recyclerView;
+    private TextView emptyView;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference myRef;
 
@@ -40,6 +42,7 @@ public class SurveysFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_surveys, container, false);
         getActivity().setTitle(R.string.nav_surveys);
         recyclerView = rootView.findViewById(R.id.recycleView);
+        emptyView = rootView.findViewById(R.id.empty);
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRef = mFirebaseDatabase.getReference("surveys");
@@ -54,6 +57,13 @@ public class SurveysFragment extends Fragment {
                     surveys.add(survey);
                 }
                 setRecyclerView(surveys);
+                if(surveys.size()<=0){
+                    recyclerView.setVisibility(View.GONE);
+                    emptyView.setVisibility(View.VISIBLE);
+                } else {
+                    emptyView.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
@@ -66,7 +76,6 @@ public class SurveysFragment extends Fragment {
 
     private void setRecyclerView(List<Survey> surveys){
         this.surveys = surveys;
-        Log.d("SURVEYS", surveys.get(0).toString());
         SurveyRecycleAdapter surveyRecycleAdapter =
                 new SurveyRecycleAdapter(this.getContext(), surveys);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
