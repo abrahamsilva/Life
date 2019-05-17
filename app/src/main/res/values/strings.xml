@@ -18,6 +18,7 @@
     <string name="event_time">Hora: %1$s </string>
     <string name="event_list_title">Eventos en %1$s </string>
     <string name="event_dialog">Fecha: %1$s \nHora: %2$s \nDescripción: %3$s</string>
+    <string name="next_event">Próximo evento</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

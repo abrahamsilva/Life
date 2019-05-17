@@ -29,7 +29,7 @@ public class DirectorioFragment extends Fragment {
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference myRef;
     private TextView emptyView;
-
+    private ValueEventListener eventListener;
     private Bundle mBundleRecyclerViewState;
 
 
@@ -45,13 +45,11 @@ public class DirectorioFragment extends Fragment {
         getActivity().setTitle(R.string.title_directorio);
         recyclerView = rootView.findViewById(R.id.recycleView);
         emptyView = rootView.findViewById(R.id.empty);
-
         mFirebaseDatabase = MainActivity.getDatabase();
         myRef = mFirebaseDatabase.getReference("contacts");
-
         contacts = new ArrayList<>();
 
-        myRef.addValueEventListener(new ValueEventListener() {
+        eventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -73,7 +71,8 @@ public class DirectorioFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 System.out.println("The read failed: " + databaseError.getCode());
             }
-        });
+        };
+        myRef.addValueEventListener(eventListener);
 
         return rootView;
     }
@@ -84,5 +83,11 @@ public class DirectorioFragment extends Fragment {
                 new ContactRecycleAdapter(this.getContext(), contacts);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         recyclerView.setAdapter(contactRecycleAdapter);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        myRef.removeEventListener(eventListener);
     }
 }

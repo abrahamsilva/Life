@@ -1,9 +1,8 @@
 package mx.itesm.edu.life;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.text.format.DateUtils;
@@ -11,6 +10,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -35,25 +36,19 @@ import mx.itesm.edu.life.models.NextEvent;
 
 public class EventosFragment extends Fragment {
 
-    private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference eventsRef, nextEventRef;
     private CalendarView calendarView;
     private List<EventDay> events;
-    private List<CalEvent> eventsDesc;
-    private List<NextEvent> nextEvents;
     private Map<String, List<CalEvent>> eventsPerDay;
     private String eventPic;
-
-    ImageView imageView;
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    private ValueEventListener nextEventListener;
+    private ValueEventListener eventListener;
+    private ImageView imageView;
+    private Animation fadeOut;
+    private Animation fadeIn;
 
     public static EventosFragment newInstance(){
-        EventosFragment fragment = new EventosFragment();
-        return fragment;
+        return new EventosFragment();
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,18 +56,16 @@ public class EventosFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_eventos, container, false);
         getActivity().setTitle(R.string.title_eventos);
         imageView = rootView.findViewById(R.id.image_event);
-        if (savedInstanceState != null){
-            Log.d("CREATE", "VIEW");
-        }
         calendarView = rootView.findViewById(R.id.calendarView);
-        mFirebaseDatabase = MainActivity.getDatabase();
+        FirebaseDatabase mFirebaseDatabase = MainActivity.getDatabase();
         eventsRef = mFirebaseDatabase.getReference("events");
         nextEventRef = mFirebaseDatabase.getReference("nextEvents");
         eventsPerDay = new HashMap<>();
         events = new ArrayList<>();
-        eventsDesc = new ArrayList<>();
-        nextEvents = new ArrayList<>();
-
+        fadeOut = AnimationUtils.
+                loadAnimation(getContext(), R.anim.fade_out);
+        fadeIn = AnimationUtils.
+                loadAnimation(getContext(), R.anim.fade_in);
         initData();
         getNextEvent();
 
@@ -80,37 +73,42 @@ public class EventosFragment extends Fragment {
     }
 
     public void getNextEvent(){
-        nextEventRef.addValueEventListener(new ValueEventListener() {
+         nextEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot eventSnapshot : dataSnapshot.getChildren()) {
                     NextEvent event = eventSnapshot.getValue(NextEvent.class);
-                    nextEvents.add(event);
                     eventPic = event.getImage();
                 }
-                Picasso.get().load(eventPic).into(imageView);
+                imageView.startAnimation(fadeOut);
+                new Handler().postDelayed(new Runnable() {// a thread in Android
+                    @Override
+                    public void run() {
+                        imageView.startAnimation(fadeIn);
+                        imageView.setBackgroundColor(getResources().getColor(R.color.white));
+                        Picasso.get().load(eventPic).into(imageView);
+                    }
+                },800);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Toast.makeText(getContext(),"No se pudo leer la imagen",
                         Toast.LENGTH_SHORT).show();
             }
-        });
+        };
+        nextEventRef.addValueEventListener(nextEventListener);
     }
 
 
     public void initData() {
-        Intent intent = new Intent();
-        eventsRef.addValueEventListener(new ValueEventListener() {
+        eventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot eventSnapshot : dataSnapshot.getChildren()){
                     CalEvent event = eventSnapshot.getValue(CalEvent.class);
-                    eventsDesc.add(event);
+                    fillEventsPerDay(event);
                 }
-                fillEventsPerDay();
                 calendarView.setEvents(events);
-
                 calendarView.setOnDayClickListener(eventDay -> {
                     if (events.contains(eventDay)) {
                         String date = DateUtils.formatDateTime(getContext(),
@@ -124,7 +122,7 @@ public class EventosFragment extends Fragment {
                             dialog.setArguments(args);
                             dialog.show(getFragmentManager(), "event list details");
                         } else {
-                            CalEvent event = eventsDesc.get(events.indexOf(eventDay));
+                            CalEvent event = eventsPerDay.get(date).get(0);
                             Bundle args = new Bundle();
                             args.putString("date", date);
                             args.putString("time", event.getTime());
@@ -142,11 +140,11 @@ public class EventosFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 System.out.println("The read failed: " + databaseError.getCode());
             }
-        });
+        };
+        eventsRef.addValueEventListener(eventListener);
     }
 
-    public void fillEventsPerDay(){
-        for(CalEvent calEvent : eventsDesc){
+    public void fillEventsPerDay(CalEvent calEvent){
             Calendar calendar = calEvent.getDate();
             events.add(new EventDay(calendar, R.drawable.blue_circle));
             String date = DateUtils.formatDateTime(getContext(),
@@ -159,7 +157,12 @@ public class EventosFragment extends Fragment {
                 eventsPerDay.put(date, events);
             }
             events.add(calEvent);
-        }
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        eventsRef.removeEventListener(eventListener);
+        nextEventRef.removeEventListener(nextEventListener);
+    }
 }

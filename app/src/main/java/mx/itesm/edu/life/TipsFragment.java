@@ -32,6 +32,7 @@ public class TipsFragment extends Fragment {
     private List<Tip> tips;
     private DatabaseReference myRef;
     private TextView emptyView;
+    private ValueEventListener eventListener;
 
     public static TipsFragment newInstance(){
         return new TipsFragment();
@@ -54,7 +55,7 @@ public class TipsFragment extends Fragment {
 
     public void initData() {
         Intent intent = new Intent();
-        myRef.addValueEventListener(new ValueEventListener() {
+        eventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 tips = new ArrayList<>();
@@ -91,7 +92,15 @@ public class TipsFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 System.out.println("The read failed: " + databaseError.getCode());
             }
-        });
+        };
+        myRef.addValueEventListener(eventListener);
 
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        myRef.removeEventListener(eventListener);
+    }
+
 }

@@ -27,13 +27,12 @@ public class SurveysFragment extends Fragment {
     private List<Survey> surveys;
     private RecyclerView recyclerView;
     private TextView emptyView;
-    private FirebaseDatabase mFirebaseDatabase;
+    private ValueEventListener eventListener;
     private DatabaseReference myRef;
 
 
     public static SurveysFragment newInstance(){
-        SurveysFragment fragment = new SurveysFragment();
-        return fragment;
+        return new SurveysFragment();
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,13 +41,11 @@ public class SurveysFragment extends Fragment {
         getActivity().setTitle(R.string.nav_surveys);
         recyclerView = rootView.findViewById(R.id.recycleView);
         emptyView = rootView.findViewById(R.id.empty);
-
-        mFirebaseDatabase = MainActivity.getDatabase();
+        FirebaseDatabase mFirebaseDatabase = MainActivity.getDatabase();
         myRef = mFirebaseDatabase.getReference("surveys");
-
         surveys = new ArrayList<>();
 
-        myRef.addValueEventListener(new ValueEventListener() {
+        eventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot surveySnapshot : dataSnapshot.getChildren()){
@@ -69,7 +66,8 @@ public class SurveysFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 System.out.println("The read failed: " + databaseError.getCode());
             }
-        });
+        };
+        myRef.addValueEventListener(eventListener);
         return rootView;
     }
 
@@ -79,5 +77,11 @@ public class SurveysFragment extends Fragment {
                 new SurveyRecycleAdapter(this.getContext(), surveys);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         recyclerView.setAdapter(surveyRecycleAdapter);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        myRef.removeEventListener(eventListener);
     }
 }

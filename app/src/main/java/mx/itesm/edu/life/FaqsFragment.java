@@ -32,6 +32,7 @@ public class FaqsFragment extends Fragment {
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference myRef;
     private TextView emptyView;
+    private ValueEventListener eventListener;
 
     @Nullable
     @Override
@@ -54,7 +55,7 @@ public class FaqsFragment extends Fragment {
         listDataHeader = new ArrayList<>();
         listHashMap = new HashMap<>();
 
-        myRef.addValueEventListener(new ValueEventListener() {
+        eventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -84,7 +85,14 @@ public class FaqsFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 System.out.println("The read failed: " + databaseError.getCode());
             }
-        });
+        };
+        myRef.addValueEventListener(eventListener);
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        myRef.removeEventListener(eventListener);
     }
 }
