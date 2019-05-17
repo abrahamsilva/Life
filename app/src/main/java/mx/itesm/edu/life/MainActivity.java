@@ -27,9 +27,9 @@ import com.google.firebase.messaging.FirebaseMessaging;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
+    private final static String EMERGENCY_NUMBER = "5554831581";
+
     private DrawerLayout drawer;
-    private NavigationView navigationView;
-    private Switch mSwitch;
 
     private static FirebaseDatabase mDatabase;
 
@@ -51,14 +51,14 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         drawer = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         Menu menuNav = navigationView.getMenu();
 
         MenuItem item  =  menuNav.findItem(R.id.nav_notifications);
         RelativeLayout layout = (RelativeLayout) item.getActionView();
-        mSwitch = layout.findViewById(R.id.notif_switch);
+        Switch mSwitch = layout.findViewById(R.id.notif_switch);
 
 
         if(mSwitch != null){
@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity
 
     public void callEmergency(View view){
         Intent intent = new Intent(Intent.ACTION_DIAL);
-        intent.setData(Uri.parse("tel:" + "5554831581"));
+        intent.setData(Uri.parse("tel:" + EMERGENCY_NUMBER));
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivity(intent);
         }
