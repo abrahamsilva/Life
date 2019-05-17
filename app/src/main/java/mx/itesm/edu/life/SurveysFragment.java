@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +43,7 @@ public class SurveysFragment extends Fragment {
         recyclerView = rootView.findViewById(R.id.recycleView);
         emptyView = rootView.findViewById(R.id.empty);
 
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mFirebaseDatabase = MainActivity.getDatabase();
         myRef = mFirebaseDatabase.getReference("surveys");
 
         surveys = new ArrayList<>();

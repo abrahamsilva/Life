@@ -1,14 +1,13 @@
 package mx.itesm.edu.life;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Intent;
-import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,14 +27,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import mx.itesm.edu.life.models.CalEvent;
 import mx.itesm.edu.life.models.NextEvent;
-
-import static android.content.Context.ALARM_SERVICE;
 
 public class EventosFragment extends Fragment {
 
@@ -46,8 +42,14 @@ public class EventosFragment extends Fragment {
     private List<CalEvent> eventsDesc;
     private List<NextEvent> nextEvents;
     private Map<String, List<CalEvent>> eventsPerDay;
+    private String eventPic;
 
     ImageView imageView;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     public static EventosFragment newInstance(){
         EventosFragment fragment = new EventosFragment();
@@ -59,8 +61,11 @@ public class EventosFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_eventos, container, false);
         getActivity().setTitle(R.string.title_eventos);
         imageView = rootView.findViewById(R.id.image_event);
+        if (savedInstanceState != null){
+            Log.d("CREATE", "VIEW");
+        }
         calendarView = rootView.findViewById(R.id.calendarView);
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mFirebaseDatabase = MainActivity.getDatabase();
         eventsRef = mFirebaseDatabase.getReference("events");
         nextEventRef = mFirebaseDatabase.getReference("nextEvents");
         eventsPerDay = new HashMap<>();
@@ -81,8 +86,9 @@ public class EventosFragment extends Fragment {
                 for (DataSnapshot eventSnapshot : dataSnapshot.getChildren()) {
                     NextEvent event = eventSnapshot.getValue(NextEvent.class);
                     nextEvents.add(event);
+                    eventPic = event.getImage();
                 }
-                Picasso.get().load(nextEvents.get(0).getImage()).into(imageView);
+                Picasso.get().load(eventPic).into(imageView);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -155,4 +161,5 @@ public class EventosFragment extends Fragment {
             events.add(calEvent);
         }
     }
+
 }

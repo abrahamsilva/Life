@@ -1,7 +1,6 @@
 package mx.itesm.edu.life;
 
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -22,7 +21,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import mx.itesm.edu.life.adapters.ExpandableListAdapter;
-import mx.itesm.edu.life.models.Contact;
 import mx.itesm.edu.life.models.Faq;
 
 public class FaqsFragment extends Fragment {
@@ -42,7 +40,7 @@ public class FaqsFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_faqs,container,false);
         getActivity().setTitle(R.string.nav_faqs);
 
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mFirebaseDatabase = MainActivity.getDatabase();
         myRef = mFirebaseDatabase.getReference("faqs");
 
         emptyView = rootView.findViewById(R.id.empty);
@@ -62,10 +60,11 @@ public class FaqsFragment extends Fragment {
 
                 for(DataSnapshot faqSnapshot : dataSnapshot.getChildren()){
                     Faq faq = faqSnapshot.getValue(Faq.class);
-                    System.out.println(faq.getQuestion());
                     listDataHeader.add(faq.getQuestion());
-                    listHashMap.put(listDataHeader.get(Integer.parseInt(faq.getId())),new ArrayList<String>());
-                    listHashMap.get(listDataHeader.get(Integer.parseInt(faq.getId()))).add(faq.getAnswer());
+                    listHashMap.put(listDataHeader
+                            .get(Integer.parseInt(faq.getId())),new ArrayList<String>());
+                    listHashMap.get(listDataHeader
+                            .get(Integer.parseInt(faq.getId()))).add(faq.getAnswer());
                 }
 
                 if(listDataHeader.size()<=0){

@@ -1,14 +1,11 @@
 package mx.itesm.edu.life;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,23 +13,17 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
 
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import mx.itesm.edu.life.adapters.GridViewAdapter;
-import mx.itesm.edu.life.models.Contact;
 import mx.itesm.edu.life.models.Tip;
-
-import static android.content.Context.ALARM_SERVICE;
 
 public class TipsFragment extends Fragment {
 
@@ -50,7 +41,7 @@ public class TipsFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_tips,container,false);
         getActivity().setTitle(R.string.nav_tips);
 
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mFirebaseDatabase = MainActivity.getDatabase();
         myRef = mFirebaseDatabase.getReference("tips");
         gridView = (GridView)rootView.findViewById(R.id.gridView);
         emptyView = rootView.findViewById(R.id.empty);
