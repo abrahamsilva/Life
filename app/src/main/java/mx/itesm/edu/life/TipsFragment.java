@@ -30,9 +30,12 @@ public class TipsFragment extends Fragment {
     private GridView gridView;
     private GridViewAdapter gridViewAdapter;
     private List<Tip> tips;
-    private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference myRef;
     private TextView emptyView;
+
+    public static TipsFragment newInstance(){
+        return new TipsFragment();
+    }
 
     @Nullable
     @Override
@@ -41,7 +44,7 @@ public class TipsFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_tips,container,false);
         getActivity().setTitle(R.string.nav_tips);
 
-        mFirebaseDatabase = MainActivity.getDatabase();
+        FirebaseDatabase mFirebaseDatabase = MainActivity.getDatabase();
         myRef = mFirebaseDatabase.getReference("tips");
         gridView = (GridView)rootView.findViewById(R.id.gridView);
         emptyView = rootView.findViewById(R.id.empty);

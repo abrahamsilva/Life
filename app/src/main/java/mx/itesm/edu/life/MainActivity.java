@@ -99,6 +99,9 @@ public class MainActivity extends AppCompatActivity
                 case R.id.navigation_directorio:
                     selectedFragment = DirectorioFragment.newInstance();
                     break;
+                case R.id.navigation_tips:
+                    selectedFragment = TipsFragment.newInstance();
+                    break;
             }
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.fragment_container, selectedFragment);
@@ -127,11 +130,6 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
         switch (menuItem.getItemId()){
-            case R.id.nav_tips:
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.fragment_container,new TipsFragment())
-                            .commit();
-                break;
             case R.id.nav_faqs:
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container,new FaqsFragment())

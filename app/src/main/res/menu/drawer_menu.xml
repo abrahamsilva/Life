@@ -5,8 +5,6 @@
     tools:showIn="navigation_view">
 
     <group android:id="@+id/section1" android:checkableBehavior="single" >
-        <item android:id="@+id/nav_tips"
-            android:title="@string/nav_tips"/>
         <item android:id="@+id/nav_faqs"
             android:title="@string/nav_faqs"/>
         <item android:id="@+id/nav_surveys"

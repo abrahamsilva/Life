@@ -11,4 +11,9 @@
         android:icon="@drawable/ic_contacts_white_24dp"
         android:title="@string/title_directorio" />
 
+    <item
+        android:id="@+id/navigation_tips"
+        android:icon="@drawable/ic_tips_primary_24dp"
+        android:title="@string/nav_tips" />
+
 </menu>
